@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <url>
+    <loc>https://avijitgoswami.in/</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://avijitgoswami.in/assets/avijit-photo.webp</image:loc>
+      <image:title>Avijit Goswami — Senior Software Engineer</image:title>
+      <image:caption>Avijit Goswami, Senior Software Engineer at CoinDCX specializing in Flutter and iOS development</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://avijitgoswami.in/assets/whale-of-quarter.png</image:loc>
+      <image:title>Whale of the Quarter Award — CoinDCX</image:title>
+      <image:caption>Avijit Goswami receiving Whale of the Quarter recognition at CoinDCX</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://avijitgoswami.in/assets/moonlander.jpg</image:loc>
+      <image:title>Moon Landers Team Award — CoinDCX</image:title>
+      <image:caption>Moon Landers team award certificate from CoinDCX co-founders</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Section deep links for crawlers -->
+  <url>
+    <loc>https://avijitgoswami.in/#about</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://avijitgoswami.in/#experience</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://avijitgoswami.in/#skills</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://avijitgoswami.in/#opensource</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://avijitgoswami.in/#contact</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+</urlset>
