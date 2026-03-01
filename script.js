@@ -13,9 +13,26 @@
   let contentLoaded = false;
 
   function initSupabase() {
+    if (supabase) return true;
     if (typeof window.supabase !== 'undefined' && window.supabase.createClient) {
       supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      console.log('[Supabase] Client initialized');
+      return true;
     }
+    return false;
+  }
+
+  // Retry initialization if CDN hasn't loaded yet
+  function ensureSupabase() {
+    if (initSupabase()) return;
+    let attempts = 0;
+    const interval = setInterval(() => {
+      attempts++;
+      if (initSupabase() || attempts > 20) {
+        clearInterval(interval);
+        if (!supabase) console.warn('[Supabase] CDN failed to load after retries');
+      }
+    }, 500);
   }
 
   async function fetchSiteContent() {
@@ -129,7 +146,7 @@
   window.addEventListener('load', () => {
     windowLoaded = true;
     loadProgress = 60;
-    initSupabase();
+    ensureSupabase();
     fetchSiteContent();
     trackPageVisit();
     updatePreloader();
@@ -792,7 +809,8 @@
     const intentLabel = intent ? { hi: 'Just saying hi!', coffee: 'Coffee chat', cv: 'Request CV', quotation: 'Quotation', project: "Let's build something" }[intent] : 'General';
 
     try {
-      if (!supabase) throw new Error('Service unavailable');
+      initSupabase(); // Lazy retry in case earlier init failed
+      if (!supabase) throw new Error('Service unavailable — Supabase not loaded');
 
       const { error } = await supabase.from('contact_submissions').insert({
         name,
