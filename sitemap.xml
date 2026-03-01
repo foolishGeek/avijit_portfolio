@@ -9,17 +9,17 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://avijitgoswami.in/assets/avijit-photo.webp</image:loc>
+      <image:loc>https://kqfazxygftmujpjerlce.supabase.co/storage/v1/object/public/assets/avijit-photo.webp</image:loc>
       <image:title>Avijit Goswami — Senior Software Engineer</image:title>
       <image:caption>Avijit Goswami, Senior Software Engineer at CoinDCX specializing in Flutter and iOS development</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://avijitgoswami.in/assets/whale-of-quarter.png</image:loc>
+      <image:loc>https://kqfazxygftmujpjerlce.supabase.co/storage/v1/object/public/assets/whale-of-quarter.png</image:loc>
       <image:title>Whale of the Quarter Award — CoinDCX</image:title>
       <image:caption>Avijit Goswami receiving Whale of the Quarter recognition at CoinDCX</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://avijitgoswami.in/assets/moonlander.jpg</image:loc>
+      <image:loc>https://kqfazxygftmujpjerlce.supabase.co/storage/v1/object/public/assets/moonlander.jpg</image:loc>
       <image:title>Moon Landers Team Award — CoinDCX</image:title>
       <image:caption>Moon Landers team award certificate from CoinDCX co-founders</image:caption>
     </image:image>
