@@ -809,19 +809,33 @@
     const intentLabel = intent ? { hi: 'Just saying hi!', coffee: 'Coffee chat', cv: 'Request CV', quotation: 'Quotation', project: "Let's build something" }[intent] : 'General';
 
     try {
-      initSupabase(); // Lazy retry in case earlier init failed
-      if (!supabase) throw new Error('Service unavailable — Supabase not loaded');
+      // Call edge function directly — it handles both DB insert and Discord notification
+      const edgeFnUrl = SUPABASE_URL + '/functions/v1/notify-discord';
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
 
-      const { error } = await supabase.from('contact_submissions').insert({
-        name,
-        email,
-        intent: intentLabel,
-        message,
-        source: 'website',
-        honeypot: '',
+      const response = await fetch(edgeFnUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          record: {
+            name,
+            email,
+            intent: intentLabel,
+            message,
+            source: 'website',
+            created_at: new Date().toISOString(),
+          },
+        }),
+        signal: controller.signal,
       });
 
-      if (error) throw error;
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        const errBody = await response.json().catch(() => ({}));
+        throw new Error(errBody.error || `Server error (${response.status})`);
+      }
 
       localStorage.setItem('ag_last_contact', Date.now().toString());
       showToast('Message sent!', 'I\'ll get back to you soon.');
@@ -834,7 +848,11 @@
       intentOptions.querySelectorAll('li').forEach(o => o.classList.remove('selected'));
     } catch (err) {
       console.error('[Contact]', err);
-      showToast('Something went wrong', 'Please try again or reach out on social.', true);
+      if (err.name === 'AbortError') {
+        showToast('Request timed out', 'Please try again in a moment.', true);
+      } else {
+        showToast('Something went wrong', 'Please try again or reach out on social.', true);
+      }
     } finally {
       sendBtn.disabled = false;
       sendBtn.classList.remove('btn-loading');
