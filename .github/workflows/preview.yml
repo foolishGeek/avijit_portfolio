@@ -1,0 +1,104 @@
+name: PR Preview
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    name: Deploy Preview
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    permissions:
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate Secrets
+        run: |
+          MISSING=0
+          [ -z "${{ secrets.VERCEL_TOKEN }}" ] && echo "❌ VERCEL_TOKEN is missing" && MISSING=1
+          [ -z "${{ secrets.VERCEL_ORG_ID }}" ] && echo "❌ VERCEL_ORG_ID is missing" && MISSING=1
+          [ -z "${{ secrets.VERCEL_PROJECT_ID }}" ] && echo "❌ VERCEL_PROJECT_ID is missing" && MISSING=1
+          [ $MISSING -ne 0 ] && echo "Fix secrets at: Settings → Secrets and variables → Actions" && exit 1
+          echo "✅ All secrets present"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Project Settings
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Build Preview
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Deploy Preview
+        id: deploy
+        run: |
+          DEPLOY_URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
+          echo "url=$DEPLOY_URL" >> $GITHUB_OUTPUT
+          echo "✅ Preview deployed to: $DEPLOY_URL"
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Comment Preview URL on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const previewUrl = '${{ steps.deploy.outputs.url }}';
+            const body = `## 🔍 Preview Deployment
+
+            | | |
+            |---|---|
+            | **Status** | ✅ Ready |
+            | **Preview** | [${previewUrl}](${previewUrl}) |
+            | **Commit** | \`${context.sha.substring(0, 7)}\` |
+
+            > Please verify all changes before merging.`;
+
+            // Find and update existing comment or create new one
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const botComment = comments.find(c =>
+              c.user.type === 'Bot' && c.body.includes('Preview Deployment')
+            );
+
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
