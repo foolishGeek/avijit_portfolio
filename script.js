@@ -638,6 +638,32 @@
   }
 
   // =============================================
+  // BIG TEXT — ONE-TIME SEQUENTIAL GLOW ON FIRST SCROLL
+  // =============================================
+  const bigTextSection = document.querySelector('.big-text-section');
+  if (bigTextSection) {
+    const bigTextGlowObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const spans = entry.target.querySelectorAll('.big-text span');
+          spans.forEach((span, i) => {
+            setTimeout(() => {
+              span.classList.add(`glow-intro-${i + 1}`);
+              // Remove class after animation completes so hover CSS works cleanly
+              span.addEventListener('animationend', () => {
+                span.classList.remove(`glow-intro-${i + 1}`);
+              }, { once: true });
+            }, i * 1000); // 1s stagger between each word
+          });
+          bigTextGlowObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    bigTextGlowObserver.observe(bigTextSection);
+  }
+
+  // =============================================
   // PAGE LOAD ANIMATIONS
   // =============================================
   function initPageAnimations() {

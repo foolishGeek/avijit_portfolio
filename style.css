@@ -2241,6 +2241,130 @@ ul {
   text-shadow: 0 0 80px rgba(48, 209, 88, 0.4), 0 0 120px rgba(48, 209, 88, 0.15);
 }
 
+/* Sequential glow animation on first scroll */
+@keyframes bigTextGlow1 {
+  0% {
+    -webkit-text-stroke-color: rgba(255, 255, 255, 0.15);
+    color: transparent;
+    text-shadow: none;
+    transform: none;
+  }
+
+  20% {
+    -webkit-text-stroke-color: transparent;
+    color: var(--text-primary);
+    text-shadow: 0 0 80px rgba(41, 151, 255, 0.5), 0 0 120px rgba(41, 151, 255, 0.2);
+    transform: translateY(-6px) scale(1.02);
+  }
+
+  50% {
+    -webkit-text-stroke-color: transparent;
+    color: var(--text-primary);
+    text-shadow: 0 0 80px rgba(41, 151, 255, 0.5), 0 0 120px rgba(41, 151, 255, 0.2);
+    transform: translateY(-6px) scale(1.02);
+  }
+
+  80% {
+    -webkit-text-stroke-color: rgba(255, 255, 255, 0.15);
+    color: transparent;
+    text-shadow: none;
+    transform: none;
+  }
+
+  100% {
+    -webkit-text-stroke-color: rgba(255, 255, 255, 0.15);
+    color: transparent;
+    text-shadow: none;
+    transform: none;
+  }
+}
+
+@keyframes bigTextGlow2 {
+  0% {
+    -webkit-text-stroke-color: rgba(255, 255, 255, 0.15);
+    color: transparent;
+    text-shadow: none;
+    transform: none;
+  }
+
+  20% {
+    -webkit-text-stroke-color: transparent;
+    color: var(--text-primary);
+    text-shadow: 0 0 80px rgba(191, 90, 242, 0.5), 0 0 120px rgba(191, 90, 242, 0.2);
+    transform: translateY(-6px) scale(1.02);
+  }
+
+  50% {
+    -webkit-text-stroke-color: transparent;
+    color: var(--text-primary);
+    text-shadow: 0 0 80px rgba(191, 90, 242, 0.5), 0 0 120px rgba(191, 90, 242, 0.2);
+    transform: translateY(-6px) scale(1.02);
+  }
+
+  80% {
+    -webkit-text-stroke-color: rgba(255, 255, 255, 0.15);
+    color: transparent;
+    text-shadow: none;
+    transform: none;
+  }
+
+  100% {
+    -webkit-text-stroke-color: rgba(255, 255, 255, 0.15);
+    color: transparent;
+    text-shadow: none;
+    transform: none;
+  }
+}
+
+@keyframes bigTextGlow3 {
+  0% {
+    -webkit-text-stroke-color: rgba(255, 255, 255, 0.15);
+    color: transparent;
+    text-shadow: none;
+    transform: none;
+  }
+
+  20% {
+    -webkit-text-stroke-color: transparent;
+    color: var(--text-primary);
+    text-shadow: 0 0 80px rgba(48, 209, 88, 0.5), 0 0 120px rgba(48, 209, 88, 0.2);
+    transform: translateY(-6px) scale(1.02);
+  }
+
+  50% {
+    -webkit-text-stroke-color: transparent;
+    color: var(--text-primary);
+    text-shadow: 0 0 80px rgba(48, 209, 88, 0.5), 0 0 120px rgba(48, 209, 88, 0.2);
+    transform: translateY(-6px) scale(1.02);
+  }
+
+  80% {
+    -webkit-text-stroke-color: rgba(255, 255, 255, 0.15);
+    color: transparent;
+    text-shadow: none;
+    transform: none;
+  }
+
+  100% {
+    -webkit-text-stroke-color: rgba(255, 255, 255, 0.15);
+    color: transparent;
+    text-shadow: none;
+    transform: none;
+  }
+}
+
+.big-text span.glow-intro-1 {
+  animation: bigTextGlow1 1s ease forwards;
+}
+
+.big-text span.glow-intro-2 {
+  animation: bigTextGlow2 1s ease forwards;
+}
+
+.big-text span.glow-intro-3 {
+  animation: bigTextGlow3 1s ease forwards;
+}
+
 /* =============================================
    CONTACT
    ============================================= */
