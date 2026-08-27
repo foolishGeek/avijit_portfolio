@@ -352,7 +352,7 @@ ul {
   font-size: 0.8125rem;
   font-weight: 500;
   color: var(--text-secondary);
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.75rem;
   border-radius: 100px;
   transition: all 0.3s ease;
   position: relative;
@@ -1057,6 +1057,21 @@ ul {
   gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
+  align-items: center;
+}
+
+.hero-resume-link {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 0.5rem 0.25rem;
+  border-bottom: 1px solid transparent;
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.hero-resume-link:hover {
+  color: var(--text-primary);
+  border-bottom-color: var(--accent);
 }
 
 .btn {
@@ -3587,6 +3602,225 @@ ul {
 
   .exp-metric:not(:last-child) {
     border-bottom: 1px solid var(--border);
+  }
+}
+
+/* =============================================
+   RESUME PAGE (/cv)
+   ============================================= */
+body.resume-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(41, 151, 255, 0.12), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 50%, rgba(191, 90, 242, 0.06), transparent),
+    var(--bg);
+  overflow-x: hidden;
+}
+
+.resume-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(3, 3, 3, 0.72);
+  border-bottom: 1px solid var(--border);
+}
+
+.resume-header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0.875rem clamp(1.25rem, 4vw, 2rem);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+}
+
+.resume-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: color 0.25s var(--ease);
+  justify-self: start;
+}
+
+.resume-back:hover {
+  color: var(--text-primary);
+}
+
+.resume-back svg {
+  transition: transform 0.25s var(--ease-spring);
+}
+
+.resume-back:hover svg {
+  transform: translateX(-3px);
+}
+
+.resume-header-inner .nav-logo {
+  justify-self: center;
+}
+
+.resume-header-spacer {
+  justify-self: end;
+  width: 1px;
+  height: 1px;
+}
+
+.resume-main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 2rem) 4rem;
+}
+
+.resume-intro {
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.resume-eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 0.75rem;
+}
+
+.resume-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 0.5rem;
+}
+
+.resume-sub {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+}
+
+.resume-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+  position: sticky;
+  top: 4.25rem;
+  z-index: 50;
+  padding: 0.75rem 0;
+  background: linear-gradient(180deg, rgba(3, 3, 3, 0.92) 40%, transparent);
+}
+
+.resume-actions .btn {
+  min-width: 148px;
+  justify-content: center;
+}
+
+.resume-actions .btn-outline {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.resume-viewer-wrap {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--surface-solid);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+}
+
+.resume-viewer-chrome {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.resume-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.resume-dot:nth-child(1) {
+  background: rgba(255, 95, 87, 0.7);
+}
+
+.resume-dot:nth-child(2) {
+  background: rgba(255, 189, 46, 0.7);
+}
+
+.resume-dot:nth-child(3) {
+  background: rgba(40, 200, 64, 0.7);
+}
+
+.resume-viewer-label {
+  margin-left: 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.resume-embed--desktop {
+  display: block;
+  height: min(78vh, 1100px);
+  background: #fff;
+}
+
+.resume-embed--desktop iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.resume-embed--mobile {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.resume-mobile-hint {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  max-width: 280px;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .resume-embed--desktop {
+    display: none;
+  }
+
+  .resume-embed--mobile {
+    display: flex;
+  }
+
+  .resume-actions {
+    position: static;
+    background: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .resume-actions .btn {
+    flex: 1 1 auto;
+    max-width: none;
   }
 }
 
