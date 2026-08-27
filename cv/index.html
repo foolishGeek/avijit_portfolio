@@ -67,7 +67,7 @@
 
     <div class="resume-actions" role="group" aria-label="Resume actions">
       <a class="btn btn-primary" id="resumeDownload"
-        href="/assets/Avijit_Goswami_Resume.pdf"
+        href="https://kqfazxygftmujpjerlce.supabase.co/storage/v1/object/public/assets/Avijit_Goswami_Resume.pdf"
         download="Avijit_Goswami_Resume.pdf"
         data-magnetic>
         <span class="btn-text">Download</span>
@@ -100,13 +100,15 @@
       <div class="resume-embed resume-embed--desktop">
         <iframe
           title="Avijit Goswami resume PDF"
-          src="/assets/Avijit_Goswami_Resume.pdf#toolbar=0&navpanes=0&view=FitH"
+          src="https://kqfazxygftmujpjerlce.supabase.co/storage/v1/object/public/assets/Avijit_Goswami_Resume.pdf#toolbar=0&navpanes=0&view=FitH"
           loading="lazy"></iframe>
       </div>
 
       <div class="resume-embed resume-embed--mobile">
         <p class="resume-mobile-hint">Preview works best on desktop. Open the PDF to view or share.</p>
-        <a class="btn btn-primary" href="/assets/Avijit_Goswami_Resume.pdf" target="_blank" rel="noopener noreferrer">
+        <a class="btn btn-primary"
+          href="https://kqfazxygftmujpjerlce.supabase.co/storage/v1/object/public/assets/Avijit_Goswami_Resume.pdf"
+          target="_blank" rel="noopener noreferrer">
           <span class="btn-text">Open PDF</span>
           <span class="btn-icon" aria-hidden="true">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -141,6 +143,8 @@
     (() => {
       'use strict';
       const SHARE_URL = 'https://avijitgoswami.in/cv';
+      const PDF_URL = 'https://kqfazxygftmujpjerlce.supabase.co/storage/v1/object/public/assets/Avijit_Goswami_Resume.pdf';
+      const PDF_FILENAME = 'Avijit_Goswami_Resume.pdf';
       const toast = document.getElementById('toast');
       const toastTitle = document.getElementById('toastTitle');
       const toastMsg = document.getElementById('toastMsg');
@@ -190,8 +194,30 @@
         }
       }
 
+      async function downloadPdf(event) {
+        event.preventDefault();
+        try {
+          const res = await fetch(PDF_URL);
+          if (!res.ok) throw new Error('fetch failed');
+          const blob = await res.blob();
+          const objectUrl = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = objectUrl;
+          a.download = PDF_FILENAME;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(objectUrl);
+        } catch (err) {
+          window.open(PDF_URL, '_blank', 'noopener,noreferrer');
+        }
+      }
+
       const copyBtn = document.getElementById('resumeCopyLink');
       if (copyBtn) copyBtn.addEventListener('click', copyShareLink);
+
+      const downloadBtn = document.getElementById('resumeDownload');
+      if (downloadBtn) downloadBtn.addEventListener('click', downloadPdf);
     })();
   </script>
 </body>
